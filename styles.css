@@ -5,6 +5,7 @@
 }
 
 :root {
+  font-family: 'Orbitron', sans-serif;
   --hue: 200;
   --saturation: 50%;
   --foreground-color: hsl(var(--hue), var(--saturation), 75%);
@@ -26,7 +27,7 @@ body {
   transform: translateY(-50%);
   /* Width is 1vh because proportions, it is 10% of the height */
   width: 1vh;
-  height: 10vh;
+  height: 15vh;
 }
 
 .paddle.left {
@@ -71,4 +72,56 @@ body {
 .score>:first-child {
   text-align: right;
   border-right: 1px solid var(--foreground-color);
+}
+
+.screen {
+  margin: 0;
+  padding: 25vh 0 0 0;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 10vh 0;
+  font-size: 5vh;
+}
+
+.btn {
+  margin: 5vh auto;
+  padding: 1vh 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3.5vh;
+  width: 25vw;
+  height: 10vh;
+
+  border: thin solid;
+}
+
+.btn:hover {
+  border: thin solid;
+  border-image: linear-gradient(60deg, gold, deeppink) 1;
+  clip-path: inset(0px round 3px);
+  animation: huerotate 3s infinite linear;
+  cursor: pointer;
+}
+
+@keyframes huerotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+
+  50% {
+    filter: hue-rotate(360deg);
+  }
+
+  100% {
+    filter: hue-rotate(0deg);
+  }
 }

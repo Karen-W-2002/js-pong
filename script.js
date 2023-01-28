@@ -1,5 +1,9 @@
 import Ball from './Ball.js'
 import Paddle from './Paddle.js'
+import Gameloop from './Gameloop.js'
+
+const gameloop = new Gameloop(document.getElementById("game"));
+
 
 const ball = new Ball(document.getElementById("ball"));
 const playerPaddle = new Paddle(document.getElementById("player-paddle"));
@@ -20,26 +24,36 @@ function update(time) {
   const hue = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hue"));
   document.documentElement.style.setProperty("--hue", hue + delta * 0.01)
 
-  if(isLose()) handleLose();
+  if(isScore()) handleScore();
 
   lastTime = time;
   window.requestAnimationFrame(update); 
 }
 
-function isLose() {
+function isScore() {
   const rect = ball.rect();
   return rect.right >= window.innerWidth || rect.left <= 0;
 }
 
-function handleLose() {
+function handleScore() {
   const rect = ball.rect();
-  if(rect.right >= window.innerWidth) {
+  if(rect.right > window.innerWidth) {
     playerScore.textContent = parseInt(playerScore.textContent) + 1;
-  } else {
+  } else if(rect.left < window.innerWidth) {
     computerScore.textContent = parseInt(computerScore.textContent) + 1;
   }
   ball.reset();
   computerPaddle.reset();
+}
+
+function resetScore() {
+  playerScore.textContent = 0;
+  computerScore.textContent = 0;
+}
+
+function resetAll() {
+  computerPaddle.reset();
+  ball.reset();
 }
 
 document.addEventListener("mousemove", e=> {
@@ -47,4 +61,8 @@ document.addEventListener("mousemove", e=> {
   playerPaddle.position = (e.y / innerHeight) * 100;
 })
 
-window.requestAnimationFrame(update);
+document.getElementById("single-btn").addEventListener('click', function() {
+  gameloop.start();
+  resetAll();
+  window.requestAnimationFrame(update);
+})
